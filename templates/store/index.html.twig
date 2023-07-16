@@ -1,0 +1,18 @@
+{# templates/store/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Liste des produits</h1>
+
+    <div class="products">
+        {% for product in products %}
+            <div class="product">
+                <h2><a href="{{ path('product_detail', {'id': product.id}) }}">{{ product.name }}</a></h2>
+                <p>{{ product.price }} €</p>
+
+                <a href="{{ path('cart_add', {'id': product.id}) }}">Ajouter au panier</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

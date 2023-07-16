@@ -1,0 +1,22 @@
+{# templates/cart/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Votre panier</h1>
+
+    <div class="cart">
+        {% for line in cart %}
+            <div class="cart-item">
+                <h2>{{ line.product.name }}</h2>
+                <p>Quantité : {{ line.quantity }}</p>
+                <p>Prix total : {{ line.product.priceHT * line.quantity }} €</p>
+
+                <a href="{{ path('cart_remove', {'id': line.product.id}) }}">Supprimer du panier</a>
+            </div>
+        {% endfor %}
+        <p>Total : {{ total }} €</p>
+    </div>
+
+    <a href="{{ path('app_checkout') }}">Procéder au paiement</a> 
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Bienvenue {%if app.user%}{{app.user.name}} {%endif%}! </h1>
+
+    {% block head %}
+    <style>
+    .products {
+        display: flex;
+        flex-wrap: wrap; /* allow the items to wrap to next line */
+        justify-content: space-between;
+    }
+
+    .product {
+        position: relative;
+        width: 30%;
+        height: 100%;
+        perspective: 1000px;
+        margin: 20px;
+    }
+
+
+    .product-inner {
+        position: relative;
+        width: 100%;
+        height: 700px; /* specify a fixed height here */
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+    }
+
+    .product:hover .product-inner {
+        transform: rotateY(180deg);
+    }
+
+    .product-image, .product-description {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+    }
+
+    .product-image {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .product-description {
+        transform: rotateY(180deg);
+        box-sizing: border-box;
+        padding: 10px;
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.7);
+        font-size: 1.5em;
+    }
+    </style>
+    {% endblock head %}
+
+    <div class="products">
+        {% for product in products %}
+            <div class="product">
+                <div class="product-inner">
+                    {% if product.media %}
+                        <div class="product-image" style="background-image: url('{{ asset('media/' ~ product.media.path) }}');"></div>
+                    {% endif %}
+                    <div class="product-description">
+                        <h2>{{ product.name }}</h2>
+                        <p>{{ product.description|striptags }}</p>
+                    </div>
+                </div>
+                <p>{{ product.priceHT }} €</p>
+                <a href="{{ path('cart_add', {'id': product.id}) }}">Ajouter au panier</a>
+            </div>
+        {% else %}
+            <p>No products found.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

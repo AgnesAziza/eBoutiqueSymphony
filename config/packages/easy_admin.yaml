@@ -1,0 +1,2 @@
+easy_admin:
+    dashboard_controller: App\Controller\AdminController
