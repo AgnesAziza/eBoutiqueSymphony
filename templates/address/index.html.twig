@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une adresse{% endblock %}
+
+{% block body %}
+<h1>Ajouter une nouvelle adresse</h1>
+
+{{ form_start(addressForm) }}
+    {{ form_widget(addressForm) }}
+    <button type="submit" class="btn btn-success">Ajouter l'adresse</button>
+{{ form_end(addressForm) }}
+{% endblock %}

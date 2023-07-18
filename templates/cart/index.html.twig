@@ -12,6 +12,11 @@
                 <p>Quantité : {{ line.quantity }}</p>
                 <p>Prix total : {{ line.product.priceHT * line.quantity }} €</p>
 
+                <form action="{{ path('cart_adjust', {'id': line.product.id}) }}" method="post">
+                    <input type="number" name="quantity" value="{{ line.quantity }}" min="1">
+                    <button type="submit">Mettre à jour la quantité</button>
+                </form>
+
                 <a href="{{ path('cart_remove', {'id': line.product.id}) }}">Supprimer du panier</a>
             </div>
         {% endfor %}

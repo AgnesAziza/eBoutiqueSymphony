@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CustomerAddressRepository;
 
-#[ORM\Entity(repositoryClass: CustomerAddressRepository::class)]
+#[ORM\Entity]
 class CustomerAddress
 {
     #[ORM\Id]

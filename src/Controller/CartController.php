@@ -40,8 +40,29 @@ class CartController extends AbstractController
 
         $session->set('cart', $cart);
 
-        return $this->redirectToRoute('cart');
+        return $this->redirectToRoute('app_cart');
     }
+
+    /**
+ * @Route("/cart/adjust/{id}", name="cart_adjust")
+ */
+    public function adjust(Request $request, SessionInterface $session, int $id): Response
+    {
+        $newQuantity = $request->request->getInt('quantity');
+
+        $cart = $session->get('cart', []);
+        if ($newQuantity > 0) {
+            $cart[$id] = $newQuantity;
+        } else {
+            unset($cart[$id]); 
+        }
+
+        $session->set('cart', $cart);
+
+        return $this->redirectToRoute('app_cart');
+    }
+
+
 
     #[Route('/cart', name: 'app_cart')]
     public function getFullCart(SessionInterface $session, ProductRepository $productRepository): Response

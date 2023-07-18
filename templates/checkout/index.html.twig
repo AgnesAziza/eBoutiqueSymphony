@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block body %}
+    <h1>Checkout</h1>
+
+    <h2>Récapitulatif de la commande</h2>
+    <ul>
+        {% for item in cart %}
+            <li>
+                {{ item.product.name }}: {{ item.quantity }} x {{ item.product.priceHT }} €
+            </li>
+        {% endfor %}
+    </ul>
+
+    <p>Sous-total: {{ total }} €</p>
+    <p>Frais de port: 5 €</p>
+    <p>Total: {{ total + 5 }} €</p>
+    <h2>Choisissez une adresse</h2>
+
+    <form action="{{ path('app_payment') }}" method="post">
+        <ul>
+            {% for address in addresses %}
+                <li>
+                    <label>
+                        <input type="radio" name="address" value="{{ address.id }}" required>
+                        {{ address.name }} ({{ address.type }}): {{ address.address }}, {{ address.cp }}, {{ address.city }}, {{ address.country }}
+                    </label>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <input type="submit" value="Procéder au paiement">
+    </form>
+{% endblock %}

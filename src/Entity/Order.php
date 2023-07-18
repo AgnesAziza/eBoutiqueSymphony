@@ -6,6 +6,7 @@ use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Collection;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
@@ -16,8 +17,9 @@ class Order
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: "integer")]
     private ?int $OrderNumber = null;
+    
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $boolean = null;
@@ -75,10 +77,11 @@ class Order
         return $this;
     }
 
-    public function getCommandLines(): Collection
+    public function getCommandLines(): \Doctrine\Common\Collections\Collection
     {
         return $this->commandLines;
     }
+    
 
     public function addCommandLine(CommandLine $commandLine): self
     {
@@ -93,7 +96,6 @@ class Order
     public function removeCommandLine(CommandLine $commandLine): self
     {
         if ($this->commandLines->removeElement($commandLine)) {
-            // set the owning side to null (unless already changed)
             if ($commandLine->getOrder() === $this) {
                 $commandLine->setOrder(null);
             }

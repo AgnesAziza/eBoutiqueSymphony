@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes adresses{% endblock %}
+
+{% block body %}
+<h1>Mes adresses</h1>
+
+<ul>
+{% for address in addresses %}
+    <li>
+        {{ address.address }} 
+        <a href="{{ path('app_address_edit', {id: address.id}) }}">Modifier</a>
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}

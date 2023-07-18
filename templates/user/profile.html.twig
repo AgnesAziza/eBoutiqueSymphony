@@ -1,0 +1,36 @@
+{# templates/user/profile.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block body %}
+    <h1>Bonjour, {{ user.firstName }} {{ user.name }}!</h1>
+
+    <h2>Vos informations de profil</h2>
+
+    {{ form_start(form) }}
+
+    {{ form_widget(form) }}
+
+    <button type="submit" class="btn btn-primary">Mettre à jour le profil</button>
+
+    {{ form_end(form) }}
+
+    <h2>Vos adresses</h2>
+
+    {% for address in user.addresses %}
+    <div>
+        <h3>{{ address.name }} ({{ address.type }})</h3>
+            <a href="{{ path('app_address_edit', {'id': address.id}) }}">Editer cette adresse</a>
+        <p>
+            {{ address.firstName }}<br>
+            {{ address.address }}<br>
+            {{ address.cp }}, {{ address.city }}, {{ address.country }}<br>
+            Téléphone : {{ address.phone }}
+        </p>
+    </div>
+    {% endfor %}
+    <a href="{{ path('app_address_add') }}">Ajouter une nouvelle adresse</a>
+
+{% endblock %}

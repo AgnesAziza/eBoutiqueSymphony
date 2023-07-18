@@ -143,14 +143,10 @@ public function setRoles(array $roles): self
 
 public function eraseCredentials(): void
 {
-    // Cette méthode est utilisée pour effacer les données sensibles de l'entité User
-    // Dans mon cas, vous n'avez pas de telles données, donc vous pouvez laisser cette méthode vide
 }
 
 public function getUserIdentifier(): string
 {
-    // Cette méthode doit retourner une chaîne qui identifie de manière unique l'utilisateur
-    // Dans mon cas, cela pourrait être l'adresse e-mail
     return $this->Email;
 }
 
@@ -175,7 +171,6 @@ public function addOrder(Order $order): self
 public function removeOrder(Order $order): self
 {
     if ($this->orders->removeElement($order)) {
-        // set the owning side to null (unless already changed)
         if ($order->getUser() === $this) {
             $order->setUser(null);
         }
@@ -205,14 +200,11 @@ public function removeOrder(Order $order): self
     {
         if ($this->addresses->contains($address)) {
             $this->addresses->removeElement($address);
-            // set the owning side to null (unless already changed)
             if ($address->getUser() === $this) {
                 $address->setUser(null);
             }
         }
-
         return $this;
     }
-
 }
 

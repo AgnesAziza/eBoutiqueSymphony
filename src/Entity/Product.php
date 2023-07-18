@@ -137,7 +137,6 @@ class Product
     public function removeCommandLine(CommandLine $commandLine): self
     {
         if ($this->commandLines->removeElement($commandLine)) {
-            // set the owning side to null (unless already changed)
             if ($commandLine->getProduct() === $this) {
                 $commandLine->setProduct(null);
             }
