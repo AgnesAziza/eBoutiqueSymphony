@@ -1,4 +1,3 @@
-
 # Partir d'une image PHP avec Apache
 FROM docker.io/library/php:8.1-apache
 
@@ -12,6 +11,16 @@ RUN apt-get update && apt-get install -y \
 
 RUN a2enmod rewrite
 
+# Installer l'extension zip, unzip et git
+RUN apt-get update && apt-get install -y \
+    unzip \
+    libzip-dev \
+    git \
+    && docker-php-ext-install zip
+
+# Autoriser Composer à s'exécuter en tant que superutilisateur dans Docker
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
 # Installer Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
@@ -21,7 +30,6 @@ COPY . /var/www/html
 # Modifier le document root de Apache
 RUN sed -ri -e 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's|/var/www|/var/www/html/public|g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
-
 
 # Installer les dépendances de l'application
 RUN composer install --no-interaction
